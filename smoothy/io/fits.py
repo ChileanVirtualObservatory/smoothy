@@ -6,7 +6,7 @@ from astropy.nddata import support_nddata
 from astropy.wcs import wcs
 from astropy.table.table import Table
 
-from Smoothy.upi.data import Data
+from smoothy.upi.data import Data
 
 @support_nddata
 def remove_superfluous(data, wcs=None, mask=None, unit=None,meta=None, restfrq=None):
