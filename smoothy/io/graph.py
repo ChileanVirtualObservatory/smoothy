@@ -2,7 +2,7 @@ from astropy import log
 import numpy as np
 from astropy.wcs import wcs
 from astropy.nddata import support_nddata
-from acalib.core.analysis import rms
+from smoothy.core.analysis import rms
 import matplotlib.pyplot as plt
 
 #TODO: complete the nddata support (i.e. data, meta...)
