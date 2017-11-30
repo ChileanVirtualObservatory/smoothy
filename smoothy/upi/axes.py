@@ -3,10 +3,10 @@ import astropy.units as u
 from astropy.nddata import support_nddata
 from astropy import log
 
-from acalib import core
+from smoothy import core
 
 # axes_names used in formatting
-from acalib.upi.data import Data
+from smoothy.upi.data import Data
 
 
 @support_nddata
@@ -33,7 +33,7 @@ def axes_names(data, wcs=None):
     return np.array(wcs.axis_type_names)[::-1]
 
 
-from acalib.upi.formatting import _unitize, _world_table_creator
+from smoothy.upi.formatting import _unitize, _world_table_creator
 
 
 @support_nddata

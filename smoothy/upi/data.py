@@ -1,7 +1,7 @@
 from astropy import nddata as ndd
 
-from acalib import upi
-from acalib import io
+from smoothy import upi
+from smoothy import io
 
 
 class Data(ndd.NDDataRef):
