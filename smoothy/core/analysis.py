@@ -1,4 +1,4 @@
-from .utils import fix_mask, slab
+from .utilities import fix_mask, slab
 import numpy as np
 
 def rms(data, mask=None):
