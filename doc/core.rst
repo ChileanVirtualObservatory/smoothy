@@ -16,11 +16,3 @@ Utils
 
 .. automodule:: smoothy.core.utilities
     :members:
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
