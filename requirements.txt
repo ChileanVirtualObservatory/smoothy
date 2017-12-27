@@ -1,5 +1,6 @@
 sphinx-automodapi
 sphinx_rtd_theme
+numpydoc
 astropy
 numpy
 matplotlib
