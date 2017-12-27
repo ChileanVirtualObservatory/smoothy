@@ -156,8 +156,8 @@ def matching_slabs(data, flux, lower, upper):
     """
     Obtain the matching subcube inside the lower and upper points.
 
-    Paramters
-    ---------
+    Parameters
+    ----------
     data : numpy.ndarray
         First data cube
 

@@ -6,7 +6,7 @@ from astropy import log
 from smoothy import core
 
 # axes_names used in formatting
-from smoothy.upi.data import Data
+# from smoothy.upi.data import Data
 
 
 @support_nddata
