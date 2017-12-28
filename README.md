@@ -1,7 +1,11 @@
+![alt text](https://chivo.cl/media/service-images/2017-12-28_09.45.07.jpg)
+
 Smoothy
 =======
 
-IO + API facilities for Astronomers.
+This python package provides an easy interface and I/O operations for using astronomical libraries over Jupyter notebooks (and in general over Python ecosystems).
+
+The source is publicly managed by the github service.
 
 Documentation
 -------------
