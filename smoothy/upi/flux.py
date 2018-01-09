@@ -1,5 +1,5 @@
 from astropy.nddata import support_nddata, NDDataRef
-from smoothy import core
+from smoothy.core import rms, fix_mask, standarize, unstandarize, add, denoise, gaussian_function
 import numpy as np
 
 from smoothy.upi.axes import opening, features, axes_units
@@ -26,9 +26,9 @@ def noise_level(data,mask=None,unit=None):
 
     #TODO: check photutils background estimation for using that if possible
     if unit is None:
-        return core.rms(data,mask)
+        return rms(data,mask)
     else:
-        return core.rms(data,mask)*unit
+        return rms(data,mask)*unit
 
 @support_nddata
 def standarize(data, wcs=None, unit=None, mask=None, meta=None):
@@ -50,8 +50,8 @@ def standarize(data, wcs=None, unit=None, mask=None, meta=None):
         Standarized data where data = a * res + b
     """
     if mask is not None:
-        data = core.fix_mask(data, mask)
-    (res, a, b) = core.standarize(data)
+        data = fix_mask(data, mask)
+    (res, a, b) = standarize(data)
     res = NDDataRef(res, uncertainty=None, mask=mask, wcs=wcs, meta=meta, unit=unit)
     return (res, a, b)
 
@@ -81,8 +81,8 @@ def unstandarize(data, a, b, wcs=None, unit=None, mask=None, meta=None):
         NDDataRef: Unstandarized data: res = a * data + b
     """
     if mask is not None:
-        data = core.fix_mask(data, mask)
-    res = core.unstandarize(data, a, b)
+        data = fix_mask(data, mask)
+    res = unstandarize(data, a, b)
     return NDDataRef(res, uncertainty=None, mask=mask, wcs=wcs, meta=meta, unit=unit)
 
 
@@ -116,7 +116,7 @@ def add(data, flux, lower=None, upper=None,wcs=None,unit=None,meta=None,mask=Non
 
     #Please use the OO version data.add(flux) for modifying the data itself.
     res = data.copy()
-    core.add(res, flux, lower, upper)
+    add(res, flux, lower, upper)
     return NDDataRef(res, uncertainty=None, mask=mask, wcs=wcs, meta=None, unit=unit)
 
 
@@ -140,7 +140,7 @@ def denoise(data, wcs=None, mask=None, unit=None, threshold=0.0):
         NDDataRef: Data denoised
 
     """
-    newdata = core.denoise(data, threshold.value)
+    newdata = denoise(data, threshold.value)
     return NDDataRef(newdata, uncertainty=None, mask=mask, wcs=wcs, meta=None, unit=unit)
 
 
@@ -177,7 +177,7 @@ def world_gaussian(data, mu, P, peak, cutoff, wcs=None):
     feat = features(data, wcs=wcs, lower=lower, upper=upper)
     feat = np.array(feat.columns.values())
     mu = np.array([x.value for x in mu])
-    res = core.gaussian_function(mu, P, feat, peak)
+    res = gaussian_function(mu, P, feat, peak)
     # TODO Not generic
     res = res.reshape(upper[0] - lower[0], upper[1] - lower[1], upper[2] - lower[2])
     return res, lower, upper

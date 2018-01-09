@@ -3,7 +3,8 @@ from astropy.table import Table
 from astropy import log
 import numpy as np
 import astropy.units as u
-from smoothy import core
+
+from smoothy.core import fix_mask, integrate
 from smoothy.upi.axes import spectral_velocities
 
 
@@ -13,7 +14,7 @@ def _moment(data,order,wcs=None,mask=None,unit=None,restfrq=None):
     if wcs is None:
         log.error("A world coordinate system (WCS) is needed")
         return None
-    data=core.fix_mask(data,mask)
+    data=fix_mask(data,mask)
     dim=wcs.wcs.spec
     rdim=data.ndim - 1 - dim
     v=spectral_velocities(data,wcs,fqis=np.arange(data.shape[rdim]),restfrq=restfrq)
@@ -145,7 +146,7 @@ def spectra(data,wcs=None,mask=None,unit=None,restrict=None):
     """
     if restrict is None:
         #Create NDD and WCS change...
-        return core.integrate(data,axis=(1,2))
+        return integrate(data,axis=(1,2))
     else:
         log.error("Not Implemented Yet!")
 

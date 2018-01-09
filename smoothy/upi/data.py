@@ -1,7 +1,6 @@
 from astropy import nddata as ndd
 
-from smoothy import upi
-from smoothy import io
+from smoothy.upi import axes
 
 
 class Data(ndd.NDDataRef):
@@ -20,8 +19,7 @@ class Data(ndd.NDDataRef):
                 Numpy ndarray with the axes's names from the WCS.
         """
 
-        return upi.axes_names(self)
-
+        return axes.axes_names(self)
 
     def extent(self, region=None):
         """
@@ -37,7 +35,7 @@ class Data(ndd.NDDataRef):
             result: (M, N) tuple of astropy.units.quantity.Quantity
                 Axes extent
         """
-        return upi.axes.extent(self, region)
+        return axes.extent(self, region)
 
     def center(self):
         """
@@ -48,7 +46,7 @@ class Data(ndd.NDDataRef):
             result: astropy.units.quantity.Quantity
                 Center of the data
         """
-        return upi.axes.center(self)
+        return axes.center(self)
 
     def axes_units(self):
         """
@@ -59,7 +57,7 @@ class Data(ndd.NDDataRef):
             result: (M,N) or (M,N,Z) numpy.ndarray
                 Vector with the units of the axes
         """
-        return upi.axes.axes_units(self)
+        return axes.axes_units(self)
 
     def resolution(self):
         """
@@ -70,7 +68,7 @@ class Data(ndd.NDDataRef):
             result: (M,N) or (M,N,Z) numpy.ndarray
                 Resolution of the data
         """
-        return upi.axes.resolution(self)
+        return axes.resolution(self)
 
     def spectral_velocities(self, fqs=None, fqis=None, restfrq=None):
         """
@@ -92,7 +90,7 @@ class Data(ndd.NDDataRef):
             result: astropy.units.quantity.Quantity
                 Array of Spectral velocities.
         """
-        return upi.axes.spectral_velocities(self, fqs=fqs, fqis=fqis, restfrq=restfrq)
+        return axes.spectral_velocities(self, fqs=fqs, fqis=fqis, restfrq=restfrq)
 
     def features(self, region=None):
         """
@@ -108,7 +106,7 @@ class Data(ndd.NDDataRef):
             result: astropy.table.Table
                 Table with WCS information of a section from the data.
         """
-        return upi.axes.features(self, region=region)
+        return axes.features(self, region=region)
 
     def opening(self, center, window):
         """
@@ -125,4 +123,4 @@ class Data(ndd.NDDataRef):
             -------
             result: ((M1,N1,Z1),(M2,N2,Z2)) tuple of tuple of ints
         """
-        return upi.axes.opening(self, center=center, window=window)
+        return axes.opening(self, center=center, window=window)
