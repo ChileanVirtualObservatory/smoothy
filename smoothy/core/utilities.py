@@ -1,5 +1,6 @@
 import numpy as np
 
+
 def fix_mask(data, mask):
     """
 
@@ -21,6 +22,7 @@ def fix_mask(data, mask):
         return data
     else:
         return np.ma.MaskedArray(data, mask)
+
 
 def fix_limits(data, vect):
     """
@@ -50,6 +52,7 @@ def fix_limits(data, vect):
         vect[up] = np.array(data.shape)[up]
     return vect
 
+
 def index_features(data, lower=None, upper=None):
     """ Creates an array with indices in features format """
     msh = index_mesh(data, lower, upper)
@@ -58,6 +61,7 @@ def index_features(data, lower=None, upper=None):
     for i in range(dim):
         ii[dim - i - 1] = msh[i].ravel()
     return ii
+
 
 def slab(data, lower=None, upper=None):
     """
@@ -104,13 +108,14 @@ def standarize(data):
     Returns
     -------
     result : tuple
-        Tuple containing the standarized numpy.ndarray or astropy.nddata.NDData cube, the factor scale y_fact and the shift y_min.
+        Tuple containing the standarized numpy.ndarray or astropy.nddata.NDData
+        cube, the factor scale y_fact and the shift y_min.
     """
     y_min = data.min()
     res = data - y_min
     y_fact = res.sum()
     res = res / y_fact
-    return (res, y_fact, y_min)
+    return res, y_fact, y_min
 
 
 def unstandarize(data, a, b):
@@ -133,6 +138,7 @@ def unstandarize(data, a, b):
     """
     return a*data+b
 
+
 def add(data, flux, lower, upper):
     """
     Adds flux to a sub-cube of an astronomical data cube.
@@ -143,14 +149,15 @@ def add(data, flux, lower, upper):
         Astronomical data cube.
     flux : numpy.ndarray
         Flux added to the cube.
-    lower : float
+    lower : tuple
         Lower bound of the sub-cube to which flux will be added.
-    upper : float
+    upper : tuple
         Upper bound of the sub-cube to which flux will be added.
     """
 
     data_slab, flux_slab = matching_slabs(data, flux, lower, upper)
     data[data_slab] += flux[flux_slab]
+
 
 def matching_slabs(data, flux, lower, upper):
     """

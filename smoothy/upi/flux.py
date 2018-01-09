@@ -4,6 +4,7 @@ import numpy as np
 
 from smoothy.upi.axes import opening, features, axes_units
 
+
 @support_nddata
 def noise_level(data,mask=None,unit=None):
     """
@@ -23,12 +24,12 @@ def noise_level(data,mask=None,unit=None):
             RMS of data
     """
 
-
-    #TODO: check photutils background estimation for using that if possible
+    # TODO: check photutils background estimation for using that if possible
     if unit is None:
         return rms(data,mask)
     else:
         return rms(data,mask)*unit
+
 
 @support_nddata
 def standarize(data, wcs=None, unit=None, mask=None, meta=None):
@@ -53,7 +54,7 @@ def standarize(data, wcs=None, unit=None, mask=None, meta=None):
         data = fix_mask(data, mask)
     (res, a, b) = standarize(data)
     res = NDDataRef(res, uncertainty=None, mask=mask, wcs=wcs, meta=meta, unit=unit)
-    return (res, a, b)
+    return res, a, b
 
 
 @support_nddata
@@ -114,7 +115,7 @@ def add(data, flux, lower=None, upper=None,wcs=None,unit=None,meta=None,mask=Non
 
     """
 
-    #Please use the OO version data.add(flux) for modifying the data itself.
+    # Please use the OO version data.add(flux) for modifying the data itself.
     res = data.copy()
     add(res, flux, lower, upper)
     return NDDataRef(res, uncertainty=None, mask=mask, wcs=wcs, meta=None, unit=unit)

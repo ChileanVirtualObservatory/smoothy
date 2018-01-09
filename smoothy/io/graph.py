@@ -5,8 +5,9 @@ from astropy.nddata import support_nddata
 from smoothy.core.analysis import rms
 import matplotlib.pyplot as plt
 
-#TODO: complete the nddata support (i.e. data, meta...)
-#TODO: make animation possible again
+# TODO: complete the nddata support (i.e. data, meta...)
+# TODO: make animation possible again
+
 
 @support_nddata
 def visualize(data,wcs=None,unit=None,contour=False):
@@ -34,6 +35,7 @@ def visualize(data,wcs=None,unit=None,contour=False):
     else:
         log.error("Data dimensions must be between 1 and 2")
 
+
 @support_nddata
 def visualize_plot(data,wcs=None,unit=None):
     """
@@ -59,6 +61,7 @@ def visualize_plot(data,wcs=None,unit=None):
         plt.ylabel(unit)
         plt.xlabel(wcs.axis_type_names[0])
     #plt.show()
+
 
 @support_nddata
 def visualize_image(data,wcs=None,unit=None,contour=False):

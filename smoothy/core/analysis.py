@@ -1,6 +1,7 @@
 from .utilities import fix_mask, slab
 import numpy as np
 
+
 def rms(data, mask=None):
     """
     Compute the RMS of data. If mask != None, then we use that mask.
@@ -23,6 +24,7 @@ def rms(data, mask=None):
     rms = np.sqrt(mm.sum() * 1.0 / mm.size)
     return rms
 
+
 def denoise(data, threshold):
     """
     Performs denoising of data cube, thresholding over the threshold value.
@@ -44,6 +46,7 @@ def denoise(data, threshold):
     newdata = np.zeros(data.shape)
     newdata[elms] = data[elms]
     return newdata
+
 
 def gaussian_function(mu, P, feat, peak):
     """
@@ -75,6 +78,7 @@ def gaussian_function(mu, P, feat, peak):
     res = np.exp(-quad / 2.0)
     res = peak * (res / res.max())
     return res
+
 
 def integrate(data, mask=None, axis=(0)):
     """
