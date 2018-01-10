@@ -5,8 +5,6 @@ Smoothy
 
 This python package provides an easy interface and I/O operations for using astronomical libraries over Jupyter notebooks (and in general over Python ecosystems).
 
-The source is publicly managed by the github service.
-
 Documentation
 -------------
 
@@ -20,4 +18,10 @@ In order to install Smoothy, clone this repository and run:
 
 ``
 python setup.py install
+``
+
+or install using pip:
+
+``
+pip install smoothy
 ``
