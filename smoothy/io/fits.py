@@ -164,7 +164,7 @@ def load_fits(filePath, primary = False):
                 N-Dimensional Datasets and Astropy Tables lists
     """
     if primary == True:
-        hdulist = fits.open(fitsfile, lazy_load_hdus=True)
+        hdulist = fits.open(filePath, lazy_load_hdus=True)
         log.info('Processing PrimaryHDU Object 0')
         hduobject = hdulist[0]
         if hduobject is None:
@@ -172,9 +172,9 @@ def load_fits(filePath, primary = False):
             raise ValueError('FITS PrimaryHDU is None')
         NDData = HDU_to_Data(hduobject)
         hdulist.close()
-        return primary
+        return NDData
     else:
-        NDData_list = []
+        NDData_list = [None]
         Table_list = []
         hdulist = fits.open(filePath)
         for counter, hdu in enumerate(hdulist):
@@ -187,7 +187,6 @@ def load_fits(filePath, primary = False):
                         primary = ndd
                     else:
                         NDData_list[0] = None
-                    list_of_hdus.append(ndd)
                 except TypeError:
                     log.info(str(counter) + " (Image) wasn't an Image")
             if isinstance(hdu, fits.BinTableHDU):
