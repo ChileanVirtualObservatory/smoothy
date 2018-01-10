@@ -4,8 +4,8 @@ from setuptools import setup, find_packages
 setup(
     name="smoothy",
     version="0.1.0",
-    description="Advanced Computing for Astronomy Library",
-    url="https://github.com/ChileanVirtualObservatory/Smoothy",
+    description="Package that provides an easy interface and I/O operations for using astronomical libraries.",
+    url="https://github.com/ChileanVirtualObservatory/smoothy",
     author="CSRG",
     author_email='contact@lirae.cl',
     classifiers=[
