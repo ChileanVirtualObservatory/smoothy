@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 
 
 @support_nddata
-def visualize(data,wcs=None,unit=None,contour=False):
+def visualize(data, wcs=None, unit=None, contour=False):
     """
     Generic function to visualize data, line-plot for 1D and image for 2D.
 
@@ -37,7 +37,7 @@ def visualize(data,wcs=None,unit=None,contour=False):
 
 
 @support_nddata
-def visualize_plot(data,wcs=None,unit=None):
+def visualize_plot(data, wcs=None, unit=None):
     """
     Plot 1D data for astronomical data.
 
@@ -64,7 +64,7 @@ def visualize_plot(data,wcs=None,unit=None):
 
 
 @support_nddata
-def visualize_image(data,wcs=None,unit=None,contour=False):
+def visualize_image(data, wcs=None, unit=None, contour=False):
     """
     Plot 2D astronimical data.
 
@@ -84,22 +84,22 @@ def visualize_image(data,wcs=None,unit=None,contour=False):
     """
     if wcs is None:
         plt.imshow(data, origin='lower', cmap=plt.cm.gist_heat)
-        cb=plt.colorbar()
+        cb = plt.colorbar()
         cb.ax.set_ylabel(unit)
     else:
-        gax=plt.subplot(111,projection=wcs)
+        gax = plt.subplot(111,projection=wcs)
         plt.imshow(data, origin='lower', cmap=plt.cm.gist_heat)
-        g0=gax.coords[0]
-        g1=gax.coords[1]
+        g0 = gax.coords[0]
+        g1 = gax.coords[1]
         g0.set_axislabel(wcs.axis_type_names[0])
         g1.set_axislabel(wcs.axis_type_names[1])
         g0.grid(color='yellow', alpha=0.5, linestyle='solid')
         g1.grid(color='yellow', alpha=0.5, linestyle='solid')
-        cb=plt.colorbar()
+        cb = plt.colorbar()
         cb.ax.set_ylabel(unit)
     if contour:
-        arms=rms(data)
-        dmax=data.max()
-        crs=np.arange(1,dmax/arms)
-        plt.contour(data,levels=arms*crs,alpha=0.5)
+        arms = rms(data)
+        dmax = data.max()
+        crs = np.arange(1, dmax/arms)
+        plt.contour(data, levels=arms*crs, alpha=0.5)
     plt.show()
