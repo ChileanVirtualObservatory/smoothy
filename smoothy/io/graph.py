@@ -144,7 +144,7 @@ def visualize_spectra(data, wcs=None, unit=None, velocities=False):
     Parameters
     ----------
     data : numpy.ndarray or astropy.nddata.NDData or astropy.nddata.NDDataRef
-        Astronomical image
+        Astronomical data
 
     wcs : astropy.wcs.WCS
         World Coordinate System from the image (not needed if contained in NDData)
@@ -173,7 +173,7 @@ def visualize_volume(data, wcs=None, unit=None):
     Parameters
     ----------
     data : numpy.ndarray or astropy.nddata.NDData or astropy.nddata.NDDataRef
-        Astronomical image
+        Astronomical cube
 
     wcs : astropy.wcs.WCS
         World Coordinate System from the image (not needed if contained in NDData)
