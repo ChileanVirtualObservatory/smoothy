@@ -138,6 +138,23 @@ def _draw_spectra(data, wcs=None, unit=None,velocities=False):
 
 @support_nddata
 def visualize_spectra(data, wcs=None, unit=None, velocities=False):
+    """
+    Plot spectra from astronomical data.
+
+    Parameters
+    ----------
+    data : numpy.ndarray or astropy.nddata.NDData or astropy.nddata.NDDataRef
+        Astronomical image
+
+    wcs : astropy.wcs.WCS
+        World Coordinate System from the image (not needed if contained in NDData)
+
+    unit : astropy.unit
+        Image units (not needed if contained in NDData)
+
+    velocities: bool
+        Use spectral velocities
+    """
     if wcs is None:
         if data.ndim != 1:
             log.info("Only 1D data can be shown without WCS")
