@@ -35,7 +35,7 @@ def visualize(data, wcs=None, unit=None, contour=False):
     elif data.ndim == 2:
         return visualize_image(data, wcs, unit, contour)
     elif data.ndim == 3:
-        return visualize_volume(data, wcs, unit, contour)
+        return visualize_volume(data, wcs, unit)
     else:
         log.error("Data dimensions must be between 1 and 3")
 
@@ -158,13 +158,13 @@ def visualize_volume(data, wcs=None, unit=None):
     ipvlab.clear()
 
     labels = ["{} [{}]".format(axe, str(unit)) for axe, unit in
-              zip(upi.axes_names(data, wcs), upi.axes_units(data, wcs))]
+              zip(axes_names(data, wcs), axes_units(data, wcs))]
 
     ipvlab.xyzlabel(*labels[::-1])
 
-    extent = upi.extent(data, wcs)
-    minlim = extent[0]
-    maxlim = extent[1]
+    extent_data = extent(data, wcs)
+    minlim = extent_data[0]
+    maxlim = extent_data[1]
 
     ipvlab.xlim(minlim[2].value, maxlim[2].value)
     ipvlab.ylim(minlim[1].value, maxlim[1].value)
