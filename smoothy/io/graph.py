@@ -73,7 +73,7 @@ def visualize_plot(data, wcs=None, unit=None):
 @support_nddata
 def visualize_image(data, wcs=None, unit=None, contour=False):
     """
-    Plot 2D astronimical data.
+    Plot 2D astronomical data.
 
     Parameters
     ----------
@@ -150,6 +150,20 @@ def visualize_spectra(data, wcs=None, unit=None, velocities=False):
 
 @support_nddata
 def visualize_volume(data, wcs=None, unit=None):
+    """
+    Plot 3D astronomical data.
+
+    Parameters
+    ----------
+    data : numpy.ndarray or astropy.nddata.NDData or astropy.nddata.NDDataRef
+        Astronomical image
+
+    wcs : astropy.wcs.WCS
+        World Coordinate System from the image (not needed if contained in NDData)
+
+    unit : astropy.unit
+        Image units (not needed if contained in NDData)
+    """
     if wcs is None:
         log.error("WCS is needed by this function")
         return
