@@ -3,7 +3,7 @@ import numpy as np
 from astropy.wcs import wcs
 from astropy.nddata import support_nddata
 from smoothy.core.analysis import rms
-from smoothy.upi.axes import axes_names, axes_units, extent, spectral_velocities, _get_axis
+from smoothy.upi.axes import axes_names, axes_units, extent, spectral_velocities, _get_axis, _is_spectra
 import ipyvolume.pylab as ipvlab
 import matplotlib.pyplot as plt
 
@@ -35,7 +35,10 @@ def visualize(data, wcs=None, unit=None, contour=False):
     elif data.ndim == 2:
         return visualize_image(data, wcs, unit, contour)
     elif data.ndim == 3:
-        return visualize_volume(data, wcs, unit)
+        if _is_spectra(data, wcs):
+            return visualize_spectra(data, wcs, unit)
+        else:
+            return visualize_volume(data, wcs, unit)
     else:
         log.error("Data dimensions must be between 1 and 3")
 
