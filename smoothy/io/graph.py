@@ -3,6 +3,7 @@ import numpy as np
 from astropy.wcs import wcs
 from astropy.nddata import support_nddata
 from smoothy.core.analysis import rms
+from smoothy.upi.axes import axes_names, axes_units, extent, spectral_velocities, _get_axis
 import matplotlib.pyplot as plt
 
 # TODO: complete the nddata support (i.e. data, meta...)
@@ -56,7 +57,7 @@ def visualize_plot(data, wcs=None, unit=None):
         plt.plot(data)
         plt.ylabel(unit)
     else:
-        #TODO: Implement x vector, but check why the wcs cannot be onedimensional!
+        # TODO: Implement x vector, but check why the wcs cannot be onedimensional!
         plt.plot(data)
         plt.ylabel(unit)
         plt.xlabel(wcs.axis_type_names[0])
@@ -102,4 +103,41 @@ def visualize_image(data, wcs=None, unit=None, contour=False):
         dmax = data.max()
         crs = np.arange(1, dmax/arms)
         plt.contour(data, levels=arms*crs, alpha=0.5)
+    plt.show()
+
+
+def _draw_spectra(data, wcs=None, unit=None,velocities=False):
+    try:
+        freq_axis = _get_axis(wcs, "FREQ")
+    except ValueError:
+        log.warning("Data does not have a spectral dimension")
+        return
+    ll = list(range(wcs.naxis))
+    ll.remove(freq_axis)
+    yvals = np.nansum(data, axis=tuple(ll))
+    plt.ylabel(unit)
+    if velocities:
+        xvals = spectral_velocities(data, wcs=wcs)
+        plt.xlabel("VEL [Km/s]")
+    else:
+        dim = wcs.wcs.spec
+        fqis = np.arange(data.shape[data.ndim - dim - 1])
+        idx = np.zeros((fqis.size, data.ndim))
+        idx[:, dim] = fqis
+        vals = wcs.all_pix2world(idx, 0)
+        xvals = vals[:, dim]
+        plt.xlabel("FREQ [Hz]")
+    plt.plot(xvals, yvals)
+
+
+@support_nddata
+def visualize_spectra(data, wcs=None, unit=None, velocities=False):
+    if wcs is None:
+        if data.ndim != 1:
+            log.info("Only 1D data can be shown without WCS")
+            return
+        else:
+            visualize_plot(data, wcs, unit)
+            return
+    _draw_spectra(data, wcs, unit, velocities)
     plt.show()

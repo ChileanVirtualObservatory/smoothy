@@ -19,5 +19,5 @@ setup(
     zip_safe=False,
     packages=find_packages(),
     include_package_data=True,
-    install_requires=['numpy>=1.11.2', 'astropy>=1.2', 'matplotlib>=1.5']
+    install_requires=['numpy>=1.11.2', 'astropy>=1.2', 'matplotlib>=1.5', 'ipyvolume>=0.4.2']
 )
