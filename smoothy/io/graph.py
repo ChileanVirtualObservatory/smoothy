@@ -4,6 +4,7 @@ from astropy.wcs import wcs
 from astropy.nddata import support_nddata
 from smoothy.core.analysis import rms
 from smoothy.upi.axes import axes_names, axes_units, extent, spectral_velocities, _get_axis
+import ipyvolume.pylab as ipvlab
 import matplotlib.pyplot as plt
 
 # TODO: complete the nddata support (i.e. data, meta...)
@@ -30,11 +31,13 @@ def visualize(data, wcs=None, unit=None, contour=False):
         For plotting Contourns
     """
     if data.ndim == 1:
-        return visualize_plot(data,wcs,unit)
+        return visualize_plot(data, wcs, unit)
     elif data.ndim == 2:
-        return visualize_image(data,wcs,unit,contour)
+        return visualize_image(data, wcs, unit, contour)
+    elif data.ndim == 3:
+        return visualize_volume(data, wcs, unit, contour)
     else:
-        log.error("Data dimensions must be between 1 and 2")
+        log.error("Data dimensions must be between 1 and 3")
 
 
 @support_nddata
@@ -141,3 +144,38 @@ def visualize_spectra(data, wcs=None, unit=None, velocities=False):
             return
     _draw_spectra(data, wcs, unit, velocities)
     plt.show()
+
+@support_nddata
+def visualize_volume(data, wcs=None, unit=None):
+    if wcs is None:
+        log.error("WCS is needed by this function")
+        return
+
+    if unit is None:
+        log.error("Unit is needed by this function")
+        return
+
+    ipvlab.clear()
+
+    labels = ["{} [{}]".format(axe, str(unit)) for axe, unit in
+              zip(upi.axes_names(data, wcs), upi.axes_units(data, wcs))]
+
+    ipvlab.xyzlabel(*labels[::-1])
+
+    extent = upi.extent(data, wcs)
+    minlim = extent[0]
+    maxlim = extent[1]
+
+    ipvlab.xlim(minlim[2].value, maxlim[2].value)
+    ipvlab.ylim(minlim[1].value, maxlim[1].value)
+    ipvlab.zlim(minlim[0].value, maxlim[0].value)
+
+    ipvlab.style.use('dark')
+
+    tf = ipvlab.transfer_function(level=[0.39, 0.54, 0.60], opacity=[0.2, 0.2, 0.2])
+    vol = ipvlab.volshow(data, tf=tf, controls=False, level_width=0.1)
+
+    ipvlab.gcf().width = 1024
+    ipvlab.gcf().height = 456
+
+    ipvlab.show()
